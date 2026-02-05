@@ -1,0 +1,1007 @@
+/* =========================================
+   Wedding Invitation - Old Money Minimalism
+   ========================================= */
+
+/* CSS Custom Properties */
+:root {
+    /* Colors - Old Money Palette */
+    --color-ivory: #FAF8F5;
+    --color-cream: #F5F0E8;
+    --color-taupe: #C9B8A8;
+    --color-warm-gray: #8B8178;
+    --color-charcoal: #3D3832;
+    --color-dark: #2A2622;
+    --color-off-white: #FEFDFB;
+
+    /* Typography */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'DM Sans', -apple-system, sans-serif;
+
+    /* Spacing */
+    --section-padding: clamp(60px, 10vh, 120px);
+    --content-max-width: 800px;
+
+    /* Transitions */
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    color: var(--color-charcoal);
+    background-color: var(--color-ivory);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Hidden State */
+.hidden {
+    display: none !important;
+}
+
+/* =========================================
+   Cover Section
+   ========================================= */
+.cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-ivory) 50%, var(--color-taupe) 100%);
+    z-index: 1000;
+    transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+
+.cover.unlocked {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Animated Hearts Container */
+.hearts-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.heart-svg {
+    position: absolute;
+    opacity: 0;
+    animation: heartFadeIn 0.3s ease-out forwards;
+}
+
+.heart-path {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation:
+        drawHeart 2s ease-out forwards,
+        eraseHeart 2s ease-in 2.5s forwards;
+}
+
+@keyframes heartFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Draw the heart from start to end */
+@keyframes drawHeart {
+    0% {
+        stroke-dashoffset: 400;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Erase from start to end */
+@keyframes eraseHeart {
+    0% {
+        stroke-dasharray: 400 0;
+        stroke-dashoffset: 0;
+    }
+
+    100% {
+        stroke-dasharray: 0 400;
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+}
+
+.cover-content {
+    text-align: center;
+    z-index: 1;
+    animation: fadeInUp 1.2s var(--transition-smooth) forwards;
+}
+
+.cover-names {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cover-names .name {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-charcoal);
+    letter-spacing: 0.02em;
+}
+
+.cover-names .ampersand {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--color-warm-gray);
+}
+
+.cover-date {
+    font-family: var(--font-sans);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--color-warm-gray);
+    margin-bottom: 0.5rem;
+}
+
+.cover-subtitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    color: var(--color-charcoal);
+    margin-bottom: 3rem;
+}
+
+/* =========================================
+   Swipe to Unlock Slider
+   ========================================= */
+.swipe-unlock {
+    width: 280px;
+    max-width: 90vw;
+    margin: 2rem auto 0;
+}
+
+.swipe-track {
+    position: relative;
+    height: 60px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    /* Liquid Glass Effect */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.swipe-handle {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    z-index: 2;
+    transition: box-shadow 0.3s var(--transition-smooth);
+
+    /* Solid glass handle */
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.swipe-handle:hover {
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.swipe-handle:active {
+    cursor: grabbing;
+}
+
+.swipe-handle.dragging {
+    cursor: grabbing;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.handle-arrow {
+    font-size: 1.25rem;
+    color: var(--color-charcoal);
+    transition: transform 0.3s var(--transition-smooth);
+    user-select: none;
+}
+
+.swipe-handle:hover .handle-arrow {
+    transform: translateX(3px);
+}
+
+/* Pulsing animation hint */
+.swipe-handle::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0;
+    }
+}
+
+.swipe-text {
+    position: absolute;
+    left: 70px;
+    right: 20px;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--color-charcoal);
+    opacity: 0.7;
+    user-select: none;
+    transition: opacity 0.3s var(--transition-smooth);
+}
+
+.swipe-unlock.swiping .swipe-text {
+    opacity: 0.3;
+}
+
+/* Success state */
+.swipe-unlock.unlocked .swipe-track {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.swipe-unlock.unlocked .swipe-handle {
+    background: var(--color-charcoal);
+}
+
+.swipe-unlock.unlocked .handle-arrow {
+    color: var(--color-ivory);
+}
+
+/* =========================================
+   Liquid Glass Button (for RSVP)
+   ========================================= */
+.liquid-glass-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s var(--transition-smooth);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.liquid-glass-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.liquid-glass-btn:active {
+    transform: translateY(0);
+}
+
+.btn-arrow {
+    transition: transform 0.3s var(--transition-smooth);
+}
+
+.liquid-glass-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* =========================================
+   Main Content
+   ========================================= */
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================
+   Sections Base
+   ========================================= */
+.section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--section-padding) 1.5rem;
+}
+
+.section-content {
+    max-width: var(--content-max-width);
+    width: 100%;
+    text-align: center;
+}
+
+.section-light {
+    background-color: var(--color-ivory);
+}
+
+.section-dark {
+    background-color: var(--color-dark);
+    color: var(--color-ivory);
+}
+
+.section-cream {
+    background-color: var(--color-cream);
+}
+
+.section-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-warm-gray);
+    margin-bottom: 2rem;
+}
+
+.section-dark .section-label {
+    color: var(--color-taupe);
+}
+
+/* =========================================
+   Scroll Animations
+   ========================================= */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   Save the Date Section
+   ========================================= */
+.couple-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.name-large {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 12vw, 6rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--color-charcoal);
+}
+
+.ampersand-large {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 300;
+    color: var(--color-warm-gray);
+}
+
+.wedding-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.date-ornament {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-taupe), transparent);
+}
+
+.date-text {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--color-warm-gray);
+}
+
+/* =========================================
+   Hero Photo Section
+   ========================================= */
+.hero-photo-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.hero-photo-frame {
+    position: relative;
+    width: clamp(280px, 75vw, 380px);
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+.hero-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-taupe) 0%, var(--color-warm-gray) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-ivory);
+    letter-spacing: 0.1em;
+}
+
+.hero-photo-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-photo-shadow {
+    position: absolute;
+    top: -10px;
+    left: calc(50% - clamp(150px, 40vw, 200px));
+    width: clamp(280px, 75vw, 380px);
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    background: rgba(201, 184, 168, 0.35);
+    transform: rotate(-4deg);
+    z-index: 1;
+}
+
+/* =========================================
+   Countdown Section
+   ========================================= */
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.countdown-value {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--color-ivory);
+}
+
+.countdown-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-taupe);
+    margin-top: 0.5rem;
+}
+
+/* Countdown flip animation */
+.countdown-value {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+.countdown-value.flip-out {
+    transform: translateY(-15px) scale(0.9);
+    opacity: 0;
+}
+
+.countdown-value.flip-in {
+    animation: flipIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes flipIn {
+    0% {
+        transform: translateY(15px) scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   Invitation Section
+   ========================================= */
+.invitation-text {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.invitation-text p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--color-charcoal);
+    margin-bottom: 1.5rem;
+}
+
+.invitation-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   Gallery Section
+   ========================================= */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px) rotate(-2deg);
+    transition: all 0.6s var(--transition-smooth);
+    transition-delay: calc(var(--delay) * 0.1s);
+}
+
+.animate-on-scroll.visible .gallery-item {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+}
+
+.gallery-item:nth-child(even) {
+    transform: translateY(20px) rotate(2deg);
+}
+
+.animate-on-scroll.visible .gallery-item:nth-child(even) {
+    transform: translateY(0) rotate(0deg);
+}
+
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-taupe) 0%, var(--color-warm-gray) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--color-ivory);
+    letter-spacing: 0.1em;
+}
+
+/* =========================================
+   Timeline Section
+   ========================================= */
+.timeline {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(201, 184, 168, 0.3);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s var(--transition-smooth);
+    transition-delay: calc(var(--delay) * 0.1s);
+}
+
+.animate-on-scroll.visible .timeline-item {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.timeline-time {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-warm-gray);
+    min-width: 60px;
+}
+
+.timeline-event {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-charcoal);
+}
+
+/* =========================================
+   Location Section
+   ========================================= */
+.location-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 400;
+    color: var(--color-ivory);
+    margin-bottom: 0.5rem;
+}
+
+.location-address {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color-taupe);
+    margin-bottom: 2rem;
+}
+
+.location-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    border: 1px solid var(--color-taupe);
+    border-radius: 50px;
+    color: var(--color-ivory);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.location-btn:hover {
+    background-color: var(--color-taupe);
+    color: var(--color-dark);
+}
+
+.location-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================
+   Dress Code Section
+   ========================================= */
+.dresscode-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    color: var(--color-charcoal);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+}
+
+.color-palette {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.color-swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color);
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s var(--transition-bounce);
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+}
+
+/* =========================================
+   Wishes Section
+   ========================================= */
+.wishes-text {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+.wishes-text p {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--color-charcoal);
+    margin-bottom: 1rem;
+}
+
+.wishes-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   RSVP Section
+   ========================================= */
+.rsvp-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    color: var(--color-taupe);
+    margin-bottom: 2rem;
+}
+
+.rsvp-btn {
+    color: var(--color-ivory);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.rsvp-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+.footer {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background-color: var(--color-dark);
+}
+
+.footer-names {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-ivory);
+    margin-bottom: 0.5rem;
+}
+
+.footer-date {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--color-taupe);
+}
+
+/* =========================================
+   Keyframe Animations
+   ========================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* =========================================
+   Media Queries
+   ========================================= */
+@media (max-width: 768px) {
+    .section {
+        min-height: auto;
+        padding: 60px 1.25rem;
+    }
+
+    .cover-names {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .couple-names {
+        gap: 0.25rem;
+    }
+
+    .wedding-date {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .date-ornament {
+        width: 40px;
+    }
+
+    .timeline-item {
+        gap: 1rem;
+    }
+
+    .countdown-item {
+        min-width: 70px;
+    }
+
+    .gallery-grid {
+        gap: 0.75rem;
+    }
+}
+
+/* Mobile: Fit Save the Date + Hero Photo on one screen */
+@media (max-width: 480px) {
+
+    /* Save the Date section - compact */
+    #save-the-date {
+        padding: 40px 1rem 20px;
+        min-height: auto;
+    }
+
+    #save-the-date .section-label {
+        margin-bottom: 1rem;
+        font-size: 0.65rem;
+    }
+
+    #save-the-date .couple-names {
+        margin-bottom: 1rem;
+        gap: 0.15rem;
+    }
+
+    #save-the-date .name-large {
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+
+    #save-the-date .ampersand-large {
+        font-size: 1.2rem;
+    }
+
+    #save-the-date .date-text {
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+    }
+
+    #save-the-date .date-ornament {
+        width: 30px;
+    }
+
+    /* Hero Photo section - compact */
+    #hero-photo {
+        padding: 20px 1rem 40px;
+        min-height: auto;
+    }
+
+    .hero-photo-wrapper {
+        padding: 10px;
+    }
+
+    .hero-photo-frame {
+        width: clamp(220px, 65vw, 280px);
+        border-radius: 16px;
+    }
+
+    .hero-photo-shadow {
+        top: -12px;
+        left: calc(50% - clamp(120px, 35vw, 150px));
+        width: clamp(220px, 65vw, 280px);
+        border-radius: 16px;
+    }
+
+    /* Other compact styles */
+    .liquid-glass-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .color-swatch {
+        width: 40px;
+        height: 40px;
+    }
+}

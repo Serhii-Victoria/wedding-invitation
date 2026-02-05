@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запрошення на весілля</title>
+    <meta name="description" content="Приєднуйтесь до святкування нашого особливого дня!">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Запрошення на весілля">
+    <meta property="og:description" content="Приєднуйтесь до святкування нашого особливого дня!">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Cover/Unlock Screen -->
+    <section id="cover" class="cover">
+        <!-- Animated Hearts Background -->
+        <div class="hearts-container" id="hearts-container"></div>
+
+        <div class="cover-content">
+            <div class="cover-names">
+                <span class="name">Сергій</span>
+                <span class="ampersand">&</span>
+                <span class="name">Вікторія</span>
+            </div>
+            <p class="cover-date">06.06.2026</p>
+            <p class="cover-subtitle">Запрошення на весілля</p>
+
+            <!-- Swipe to Unlock Slider -->
+            <div class="swipe-unlock" id="swipe-unlock">
+                <div class="swipe-track">
+                    <div class="swipe-handle" id="swipe-handle">
+                        <span class="handle-arrow">→</span>
+                    </div>
+                    <span class="swipe-text">Проведіть, щоб відкрити</span>
+                </div>
+            </div>
+        </div>
+        <div class="cover-overlay"></div>
+    </section>
+
+    <!-- Main Content (hidden initially) -->
+    <main id="main-content" class="main-content hidden">
+
+        <!-- Save the Date -->
+        <section id="save-the-date" class="section section-light animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Save the Date</p>
+                <div class="couple-names">
+                    <span class="name-large">Сергій</span>
+                    <span class="ampersand-large">&</span>
+                    <span class="name-large">Вікторія</span>
+                </div>
+                <div class="wedding-date">
+                    <div class="date-ornament"></div>
+                    <p class="date-text">06.06.2026</p>
+                    <div class="date-ornament"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Photo -->
+        <section id="hero-photo" class="section section-light animate-on-scroll">
+            <div class="section-content">
+                <div class="hero-photo-wrapper">
+                    <div class="hero-photo-frame">
+                        <div class="hero-photo-placeholder">
+                            <span>Фото</span>
+                        </div>
+                    </div>
+                    <div class="hero-photo-shadow"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section id="countdown" class="section section-dark animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">До нашого весілля залишилось</p>
+                <div class="countdown-timer" id="countdown-timer">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">--</span>
+                        <span class="countdown-label">днів</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">--</span>
+                        <span class="countdown-label">годин</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">--</span>
+                        <span class="countdown-label">хвилин</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">--</span>
+                        <span class="countdown-label">секунд</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Invitation Message -->
+        <section id="invitation" class="section section-light animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Дорогі друзі та рідні</p>
+                <div class="invitation-text">
+                    <p>Ми раді запросити вас на святкування нашого весілля.</p>
+                    <p>Цей день буде особливим для нас, і ми хочемо розділити його з найближчими людьми.</p>
+                    <p>Нехай це буде затишне, щире та наповнене любов'ю свято.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section id="gallery" class="section section-cream animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Наша історія</p>
+                <div class="gallery-grid">
+                    <div class="gallery-item" style="--delay: 0">
+                        <div class="gallery-placeholder">Фото 1</div>
+                    </div>
+                    <div class="gallery-item" style="--delay: 1">
+                        <div class="gallery-placeholder">Фото 2</div>
+                    </div>
+                    <div class="gallery-item" style="--delay: 2">
+                        <div class="gallery-placeholder">Фото 3</div>
+                    </div>
+                    <div class="gallery-item" style="--delay: 3">
+                        <div class="gallery-placeholder">Фото 4</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline/Schedule -->
+        <section id="timeline" class="section section-light animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Програма дня</p>
+                <div class="timeline">
+                    <div class="timeline-item" style="--delay: 0">
+                        <span class="timeline-time">13:00</span>
+                        <span class="timeline-event">Збір гостей</span>
+                    </div>
+                    <div class="timeline-item" style="--delay: 1">
+                        <span class="timeline-time">14:00</span>
+                        <span class="timeline-event">Церемонія</span>
+                    </div>
+                    <div class="timeline-item" style="--delay: 2">
+                        <span class="timeline-time">15:00</span>
+                        <span class="timeline-event">Банкет, конкурси, танці</span>
+                    </div>
+                    <div class="timeline-item" style="--delay: 3">
+                        <span class="timeline-time">19:00</span>
+                        <span class="timeline-event">Торт, обряди, аукціон</span>
+                    </div>
+                    <div class="timeline-item" style="--delay: 4">
+                        <span class="timeline-time">22:00</span>
+                        <span class="timeline-event">Завершення програми</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location -->
+        <section id="location" class="section section-dark animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Локація</p>
+                <h3 class="location-name">Місце проведення</h3>
+                <p class="location-address">Деталі за посиланням</p>
+                <a href="https://maps.app.goo.gl/k8thKckQsWRqNykXA?g_st=it" class="location-btn" target="_blank"
+                    rel="noopener">
+                    <span>Прокласти маршрут</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Dress Code -->
+        <section id="dresscode" class="section section-light animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Дрес-код</p>
+                <p class="dresscode-text">Ми будемо вдячні, якщо ви оберете вбрання у спокійних, приглушених тонах</p>
+                <div class="color-palette">
+                    <div class="color-swatch" style="--color: #E8E4DF"></div>
+                    <div class="color-swatch" style="--color: #C9B8A8"></div>
+                    <div class="color-swatch" style="--color: #A69B8D"></div>
+                    <div class="color-swatch" style="--color: #8B7E6F"></div>
+                    <div class="color-swatch" style="--color: #6B5E4F"></div>
+                    <div class="color-swatch" style="--color: #4A4039"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wishes -->
+        <section id="wishes" class="section section-cream animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Побажання</p>
+                <div class="wishes-text">
+                    <p>Найкращий подарунок — це ваша присутність та теплі побажання.</p>
+                    <p>Якщо ви бажаєте зробити подарунок, ми будемо вдячні за внесок у нашу спільну мрію.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section id="rsvp" class="section section-dark animate-on-scroll">
+            <div class="section-content">
+                <p class="section-label">Підтвердження присутності</p>
+                <p class="rsvp-text">Будь ласка, повідомте про вашу присутність до XX.XX.2025</p>
+                <a href="#" class="rsvp-btn liquid-glass-btn" target="_blank" rel="noopener">
+                    <span class="btn-text">Підтвердити</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-names">Сергій & Вікторія</p>
+            <p class="footer-date">06.06.2026</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
