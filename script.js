@@ -20,20 +20,23 @@ function initHeartsAnimation() {
     const container = document.getElementById('hearts-container');
     if (!container) return;
 
-    // Calligraphic heart path - single continuous stroke forming elegant heart
-    const heartPath = "M50,85 C35,70 5,55 5,30 C5,10 25,5 50,25 C75,5 95,10 95,30 C95,55 65,70 50,85 Z";
+    // Heart drawing order: bottom tip → left half → center dip → right half → bottom tip
+    const heartPath = "M50,75 C20,50 10,35 10,20 C10,5 35,5 50,25 C65,5 90,5 90,20 C90,35 80,50 50,75";
 
     function createHeart() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 100 90');
+        svg.setAttribute('viewBox', '0 0 100 80');
         svg.classList.add('heart-svg');
 
         // Random position
         const x = Math.random() * 80 + 10; // 10-90%
         const y = Math.random() * 70 + 15; // 15-85%
 
-        // Random size
-        const size = Math.random() * 40 + 35; // 35-75px
+        // Random size - minimum 30px, max 95px
+        // Use exponential distribution to make larger hearts (~80-95px) 1.5x less likely
+        // Math.pow(Math.random(), 1.5) skews the randomness towards 0
+        const sizeProbability = Math.pow(Math.random(), 1.5);
+        const size = sizeProbability * 65 + 30; // 30-95px
 
         // Random slight rotation for more natural look
         const rotation = (Math.random() - 0.5) * 30; // -15 to +15 degrees
@@ -54,18 +57,18 @@ function initHeartsAnimation() {
         // Remove after animation completes
         setTimeout(() => {
             svg.remove();
-        }, 5000);
+        }, 6000);
     }
 
     // Create initial hearts
     for (let i = 0; i < 2; i++) {
-        setTimeout(() => createHeart(), i * 1200);
+        setTimeout(() => createHeart(), i * 800);
     }
 
     // Continue creating hearts
     heartsInterval = setInterval(() => {
         createHeart();
-    }, 2500);
+    }, 1200);
 }
 
 function stopHeartsAnimation() {
@@ -167,8 +170,8 @@ function initScrollAnimations() {
 
     const observerOptions = {
         root: null,
-        rootMargin: '0px 0px -100px 0px',
-        threshold: 0.1
+        rootMargin: '0px 0px 0px 0px', // Trigger exactly when it enters the viewport threshold
+        threshold: 0.5 // Requires 50% of the element (e.g. the dress code block) to be visible before animating
     };
 
     const observer = new IntersectionObserver((entries) => {
