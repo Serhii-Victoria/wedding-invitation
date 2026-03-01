@@ -531,6 +531,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 60% center;
+    /* Shifts the focus 10% to the right */
 }
 
 .hero-photo-shadow {
@@ -629,6 +631,15 @@ body {
     margin-bottom: 0;
 }
 
+.signature {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    font-style: italic;
+    font-weight: 300;
+    margin-top: 3rem;
+    color: var(--color-warm-gray);
+}
+
 /* =========================================
    Gallery Section
    ========================================= */
@@ -663,17 +674,16 @@ body {
     transform: translateY(0) rotate(0deg);
 }
 
-.gallery-placeholder {
+.gallery-item img {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--color-taupe) 0%, var(--color-warm-gray) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    color: var(--color-ivory);
-    letter-spacing: 0.1em;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s var(--transition-smooth);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
 }
 
 /* =========================================
@@ -730,6 +740,44 @@ body {
     font-weight: 400;
     color: var(--color-ivory);
     margin-bottom: 0.5rem;
+}
+
+/* Location Photo Styling (Mirrors Hero Photo) */
+.location-photo-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 2rem;
+}
+
+.location-photo-frame {
+    position: relative;
+    width: clamp(260px, 70vw, 340px);
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.location-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.location-photo-shadow {
+    position: absolute;
+    top: -10px;
+    left: calc(50% - clamp(140px, 37vw, 180px));
+    width: clamp(260px, 70vw, 340px);
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    /* Lighter shadow for dark background */
+    transform: rotate(-4deg);
+    z-index: 1;
 }
 
 .location-address {
